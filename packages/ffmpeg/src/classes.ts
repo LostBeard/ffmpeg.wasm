@@ -14,6 +14,9 @@ import {
   ProgressEventCallback,
   FileData,
   WorkerFSMountData,
+  FFFSType,
+  FFFSMountOptions,
+  FFFSPath,
 } from "./types.js";
 import { getMessageID } from "./utils.js";
 import { ERROR_TERMINATED, ERROR_NOT_LOADED } from "./errors.js";
@@ -263,23 +266,23 @@ export class FFmpeg {
     ) as Promise<OK>;
   };
 
-  public mount = (path: string, data: WorkerFSMountData): Promise<OK> => {
+  public mount = (fsType: FFFSType, options: FFFSMountOptions, mountPoint: FFFSPath, ): Promise<OK> => {
     const trans: Transferable[] = [];
     return this.#send(
       {
         type: FFMessageType.MOUNT,
-        data: { path, data },
+        data: { fsType, options, mountPoint },
       },
       trans
     ) as Promise<OK>;
   };
 
-  public unmount = (path: string): Promise<OK> => {
+  public unmount = (mountPoint: FFFSPath): Promise<OK> => {
     const trans: Transferable[] = [];
     return this.#send(
       {
         type: FFMessageType.UNMOUNT,
-        data: { path },
+        data: { mountPoint },
       },
       trans
     ) as Promise<OK>;
@@ -310,7 +313,7 @@ export class FFmpeg {
   ): Promise<FileData> =>
     this.#send({
       type: FFMessageType.READ_FILE,
-      data: { path, encoding },
+      data: { mountPoint: path, encoding },
     }) as Promise<FileData>;
 
   /**
@@ -321,7 +324,7 @@ export class FFmpeg {
   public deleteFile = (path: string): Promise<OK> =>
     this.#send({
       type: FFMessageType.DELETE_FILE,
-      data: { path },
+      data: { mountPoint: path },
     }) as Promise<OK>;
 
   /**
@@ -343,7 +346,7 @@ export class FFmpeg {
   public createDir = (path: string): Promise<OK> =>
     this.#send({
       type: FFMessageType.CREATE_DIR,
-      data: { path },
+      data: { mountPoint: path },
     }) as Promise<OK>;
 
   /**
@@ -354,7 +357,7 @@ export class FFmpeg {
   public listDir = (path: string): Promise<FSNode[]> =>
     this.#send({
       type: FFMessageType.LIST_DIR,
-      data: { path },
+      data: { mountPoint: path },
     }) as Promise<FSNode[]>;
 
   /**
@@ -365,6 +368,6 @@ export class FFmpeg {
   public deleteDir = (path: string): Promise<OK> =>
     this.#send({
       type: FFMessageType.DELETE_DIR,
-      data: { path },
+      data: { mountPoint: path },
     }) as Promise<OK>;
 }
