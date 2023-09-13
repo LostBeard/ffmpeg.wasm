@@ -313,7 +313,7 @@ export class FFmpeg {
   ): Promise<FileData> =>
     this.#send({
       type: FFMessageType.READ_FILE,
-      data: { mountPoint: path, encoding },
+      data: { path, encoding },
     }) as Promise<FileData>;
 
   /**
@@ -324,7 +324,7 @@ export class FFmpeg {
   public deleteFile = (path: string): Promise<OK> =>
     this.#send({
       type: FFMessageType.DELETE_FILE,
-      data: { mountPoint: path },
+      data: { path },
     }) as Promise<OK>;
 
   /**
@@ -346,7 +346,7 @@ export class FFmpeg {
   public createDir = (path: string): Promise<OK> =>
     this.#send({
       type: FFMessageType.CREATE_DIR,
-      data: { mountPoint: path },
+      data: { path },
     }) as Promise<OK>;
 
   /**
@@ -357,7 +357,7 @@ export class FFmpeg {
   public listDir = (path: string): Promise<FSNode[]> =>
     this.#send({
       type: FFMessageType.LIST_DIR,
-      data: { mountPoint: path },
+      data: { path },
     }) as Promise<FSNode[]>;
 
   /**
@@ -368,6 +368,6 @@ export class FFmpeg {
   public deleteDir = (path: string): Promise<OK> =>
     this.#send({
       type: FFMessageType.DELETE_DIR,
-      data: { mountPoint: path },
+      data: { path },
     }) as Promise<OK>;
 }
