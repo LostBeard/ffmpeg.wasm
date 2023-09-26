@@ -154,7 +154,7 @@ const transcodeFile = async (file) => {
     return data;
 };
 
-addEventListener("load", async (event) => {
+addEventListener("load", (event) => {
     localFileInput = document.querySelector('#local-file');
     localFileInput.addEventListener('change', async () => await transcodeLocalFileInput());
     remoteFileInput = document.querySelector('#remote-file');
