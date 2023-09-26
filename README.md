@@ -45,7 +45,7 @@ transcode.js
 ```js  
 "use strict";
 
-const useWorkerFSIfAvailable = false;
+const useWorkerFSIfAvailable = true;
 const useMultiThreadIfAvailable = true;
 // uses custom build of ffmpeg.wasm v0.12.6 with pull requests #562 and #581 implemented; found here
 // https://github.com/LostBeard/ffmpeg.wasm/releases/download/v0.12.7/LostBeard-ffmpeg.wasm.v0.12.7.zip
