@@ -12,35 +12,6 @@ This fork is used by [SpawnDev.BlazorJS.FFmpegWasm](https://github.com/LostBeard
 
 ## Demo code
 
-index.html  
-```html  
-<html>
-<head>
-    <script src="transcode.js"></script>
-</head>
-<body>
-    <p>Test using <a href="https://github.com/LostBeard/ffmpeg.wasm">ffmpeg.wasm custom v0.12.7</a>. A fork of the
-        awesome project at <a href="https://github.com/ffmpegwasm/ffmpeg.wasm">ffmpeg.wasm</a></p>
-    <div style="padding: 5px;">
-        <button disabled id="load-button">Load ffmpeg-core (~31 MB)</button><br />
-        <video autoplay muted id="video-result" controls></video><br />
-    </div>
-    <div style="padding: 5px;">
-        Local file input:<br />
-        <input disabled type="file" id="local-file" accept=".mp4,.m4v,.webm,.avi,.mkv,.mov,.wmv" /><br />
-    </div>
-    <div style="padding: 5px;">
-        Remote file input:<br />
-        <input style="width: 100%;" disabled id="remote-file" type="text"
-            value="https://raw.githubusercontent.com/ffmpegwasm/testdata/master/Big_Buck_Bunny_180_10s.webm"><br />
-        <button disabled id="transcode-button">Transcode remote file</button><br />
-    </div>
-    <p id="log-div"></p>
-    <p>Open Developer Tools (Ctrl+Shift+I) to View Logs</p>
-</body>
-</html>
-```
-
 transcode.js  
 ```js  
 "use strict";
@@ -169,4 +140,33 @@ addEventListener("load", (event) => {
     console.log('window loaded');
 });
 
+```
+
+index.html  
+```html  
+<html>
+<head>
+    <script src="transcode.js"></script>
+</head>
+<body>
+    <p>Test using <a href="https://github.com/LostBeard/ffmpeg.wasm">ffmpeg.wasm custom v0.12.7</a>. A fork of the
+        awesome project at <a href="https://github.com/ffmpegwasm/ffmpeg.wasm">ffmpeg.wasm</a></p>
+    <div style="padding: 5px;">
+        <button disabled id="load-button">Load ffmpeg-core (~31 MB)</button><br />
+        <video autoplay muted id="video-result" controls></video><br />
+    </div>
+    <div style="padding: 5px;">
+        Local file input:<br />
+        <input disabled type="file" id="local-file" accept=".mp4,.m4v,.webm,.avi,.mkv,.mov,.wmv" /><br />
+    </div>
+    <div style="padding: 5px;">
+        Remote file input:<br />
+        <input style="width: 100%;" disabled id="remote-file" type="text"
+            value="https://raw.githubusercontent.com/ffmpegwasm/testdata/master/Big_Buck_Bunny_180_10s.webm"><br />
+        <button disabled id="transcode-button">Transcode remote file</button><br />
+    </div>
+    <p id="log-div"></p>
+    <p>Open Developer Tools (Ctrl+Shift+I) to View Logs</p>
+</body>
+</html>
 ```
