@@ -45,12 +45,13 @@ transcode.js
 ```js  
 "use strict";
 
-const useWorkerFSIfAvailable = true;
+const useWorkerFSIfAvailable = false;
 const useMultiThreadIfAvailable = true;
+// uses custom build of ffmpeg.wasm v0.12.6 with pull requests #562 and #581 implemented; found here
+// https://github.com/LostBeard/ffmpeg.wasm/releases/download/v0.12.7/LostBeard-ffmpeg.wasm.v0.12.7.zip
 const baseURLFFMPEG = 'ffmpeg-wasm/ffmpeg';
 const baseURLCore = 'ffmpeg-wasm/core';
 const baseURLCoreMT = 'ffmpeg-wasm/core-mt';
-const workerBFSLoaderURL = 'worker.loader.js';
 var ffmpeg = null;
 var loadBtn = null;
 var transcodeBtn = null;
@@ -84,7 +85,7 @@ const load = async () => {
     // check if SharedArrayBuffer is supported via crossOriginIsolated global var
     // https://developer.mozilla.org/en-US/docs/Web/API/crossOriginIsolated
     if (useMultiThreadIfAvailable && window.crossOriginIsolated) {
-        transcodeBtn.innerHTML = 'Transcode webm to mp4 (multi-threaded)';
+        transcodeBtn.innerHTML = 'Transcode remote file (multi-threaded)';
         await ffmpeg.load({
             workerLoadURL: await toBlobURL(`${baseURLFFMPEG}/814.ffmpeg.js`, 'text/javascript'),
             coreURL: await toBlobURL(`${baseURLCoreMT}/ffmpeg-core.js`, 'text/javascript'),
@@ -92,7 +93,7 @@ const load = async () => {
             workerURL: await toBlobURL(`${baseURLCoreMT}/ffmpeg-core.worker.js`, 'application/javascript'),
         });
     } else {
-        transcodeBtn.innerHTML = 'Transcode webm to mp4 (single-threaded)';
+        transcodeBtn.innerHTML = 'Transcode remote file (single-threaded)';
         await ffmpeg.load({
             workerLoadURL: await toBlobURL(`${baseURLFFMPEG}/814.ffmpeg.js`, 'text/javascript'),
             coreURL: await toBlobURL(`${baseURLCore}/ffmpeg-core.js`, 'text/javascript'),
@@ -164,6 +165,7 @@ addEventListener("load", async (event) => {
     transcodeBtn.addEventListener('click', async () => await transcodeRemoteFile());
     logDiv = document.querySelector('#log-div');
     videoEl = document.querySelector('#video-result');
+    logDiv.innerHTML = window.crossOriginIsolated ? 'Multithreading supported' : 'Multithreading not supported';
     console.log('window loaded');
 });
 
