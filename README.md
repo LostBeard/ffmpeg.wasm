@@ -6,8 +6,6 @@
 
 # Fork of the awesome project [ffmpeg.wasm](https://github.com/ffmpegwasm/ffmpeg.wasm)
 
-Forked to test customization of ffmpeg-core including adding [WORKERFS](https://emscripten.org/docs/api_reference/Filesystem-API.html#filesystem-api-workerfs) filesystem support. ✅
-
 This fork is used by [SpawnDev.BlazorJS.FFmpegWasm](https://github.com/LostBeard/SpawnDev.BlazorJS.FFmpegWasm) to bring ffmpeg.wasm into Blazor WASM apps.
 
 ## Demo code
@@ -18,8 +16,8 @@ transcode.js
 
 const useWorkerFSIfAvailable = true;
 const useMultiThreadIfAvailable = true;
-// uses custom build of ffmpeg.wasm v0.12.6 with pull requests #562 and #581 implemented; found here
-// https://github.com/LostBeard/ffmpeg.wasm/releases/download/v0.12.7/LostBeard-ffmpeg.wasm.v0.12.7.zip
+// uses custom build of ffmpeg.wasm v0.12.7 with the addition of pull request #562 to allow setting the worker.js path in the load config.
+// https://github.com/LostBeard/ffmpeg.wasm/releases/download/v0.12.8-beta/LostBeard-ffmpeg.wasm.umd.v0.12.8-beta.zip
 const baseURLFFMPEG = 'ffmpeg-wasm/ffmpeg';
 const baseURLCore = 'ffmpeg-wasm/core';
 const baseURLCoreMT = 'ffmpeg-wasm/core-mt';
