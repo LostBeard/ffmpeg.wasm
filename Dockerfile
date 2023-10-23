@@ -124,6 +124,14 @@ ADD https://github.com/libass/libass.git#$LIBASS_BRANCH /src
 COPY build/libass.sh /src/build.sh
 RUN bash -x /src/build.sh
 
+# Build zimg
+FROM emsdk-base AS zimg-builder
+ENV ZIMG_BRANCH=release-3.0.5
+RUN apt-get update && apt-get install -y git
+RUN git clone --recursive -b $ZIMG_BRANCH https://github.com/sekrit-twc/zimg.git /src
+COPY build/zimg.sh /src/build.sh
+RUN bash -x /src/build.sh
+
 # Base ffmpeg image with dependencies and source code populated.
 FROM emsdk-base AS ffmpeg-base
 RUN embuilder build sdl2 sdl2-mt
@@ -137,6 +145,7 @@ COPY --from=theora-builder $INSTALL_DIR $INSTALL_DIR
 COPY --from=vorbis-builder $INSTALL_DIR $INSTALL_DIR
 COPY --from=libwebp-builder $INSTALL_DIR $INSTALL_DIR
 COPY --from=libass-builder $INSTALL_DIR $INSTALL_DIR
+COPY --from=zimg-builder $INSTALL_DIR $INSTALL_DIR
 
 # Build ffmpeg
 FROM ffmpeg-base AS ffmpeg-builder
@@ -154,7 +163,8 @@ RUN bash -x /src/build.sh \
       --enable-libwebp \
       --enable-libfreetype \
       --enable-libfribidi \
-      --enable-libass
+      --enable-libass \
+      --enable-libzimg 
 
 # Build ffmpeg.wasm
 FROM ffmpeg-builder AS ffmpeg-wasm-builder
@@ -178,7 +188,8 @@ ENV FFMPEG_LIBS \
       -lfreetype \
       -lfribidi \
       -lharfbuzz \
-      -lass
+      -lass \
+      -lzimg
 RUN mkdir -p /src/dist/umd && bash -x /src/build.sh \
       ${FFMPEG_LIBS} \
       -o dist/umd/ffmpeg-core.js

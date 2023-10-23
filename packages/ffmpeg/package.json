@@ -1,14 +1,17 @@
 {
   "name": "@ffmpeg/ffmpeg",
-  "version": "0.12.6",
+  "version": "0.12.7",
   "description": "FFmpeg WebAssembly version for browser",
   "main": "./dist/umd/ffmpeg.js",
   "types": "./dist/esm/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/esm/index.d.ts",
+      "node": "./dist/esm/empty.mjs",
+      "default": {
       "import": "./dist/esm/index.js",
       "require": "./dist/umd/ffmpeg.js"
+    }
     }
   },
   "scripts": {
@@ -56,6 +59,6 @@
     "webpack-cli": "^5.1.4"
   },
   "dependencies": {
-    "@ffmpeg/types": "^0.12.0"
+    "@ffmpeg/types": "^0.12.2"
   }
 }
